@@ -8,6 +8,7 @@ body {
 
 .container {
   width: 400px;
+  margin: 50px auto;
 }
 
 button {
@@ -38,5 +39,5 @@ button:hover {
   width: 0%;
   background-color: #3182ce !important;
   color: green !important;
-  transition: width 2s linear;
+  /* transition: width 2s linear; */
 }

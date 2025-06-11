@@ -7,9 +7,15 @@ addBtn.addEventListener("click", () => {
 
   const fill = document.createElement("div");
   fill.className = "fill";
-  fill.style.width = `${Math.floor(Math.random() * 100) + 1}%`; 
+  fill.style.width = `10%`; 
 
   bar.appendChild(fill);
   container.appendChild(bar);
+
+  let x = 0;
+  bar.addEventListener("click", () => {
+    fill.style.width = `${x + 10}%`;
+    x += 10;
+  });
 
 });
