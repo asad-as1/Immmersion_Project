@@ -1,0 +1,63 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /* background: linear-gradient(90deg, rgb(85, 219, 85), rgb(102, 217, 202)); */
+}
+.top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+
+    
+.cont {
+    height: auto;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* flex-direction: column; */
+}
+
+.box{
+    height: 300px;
+    width: 300px;
+    background-color: grey !important;
+    /* color: grey; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid black !important;
+
+}
+
+#btn {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.textArea {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    background-color: lightslategray;
+}
+
+.notesList {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    gap: 10px;
+}
