@@ -1,56 +1,43 @@
-window.addEventListener('DOMContentLoaded', () => {
-  fetchAllProducts();
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+const productContainer = document.getElementById('product');
 
-  document.getElementById('searchBtn').addEventListener('click', () => {
-    const query = document.getElementById('searchInput').value.trim();
-    if (query === '') {
-      fetchAllProducts();
-    } else {
-      fetchSearchResults(query);
-    }
-  });
-});
+fetch('https://dummyjson.com/products?limit=100')
+  .then(res => res.json())
+  .then(data => showProducts(data.products));
 
+searchBtn.onclick = function () {
+  const query = searchInput.value.trim();
 
-function fetchAllProducts() {
-  fetch('https://dummyjson.com/products?limit=100')
-    .then(res => res.json())
-    .then(data => renderProducts(data.products))
-    .catch(err => {
-      document.getElementById('product').innerHTML = "<p>Failed to load products.</p>";
-      console.error(err);
-    });
-}
+  if (query === '') {
+    fetch('https://dummyjson.com/products?limit=100')
+      .then(res => res.json())
+      .then(data => showProducts(data.products));
+  } else {
+    fetch(`https://dummyjson.com/products/search?q=${query}`)
+      .then(res => res.json())
+      .then(data => showProducts(data.products));
+  }
+};
 
-function fetchSearchResults(query) {
-  fetch(`https://dummyjson.com/products/search?q=${encodeURIComponent(query)}`)
-    .then(res => res.json())
-    .then(data => renderProducts(data.products))
-    .catch(err => {
-      document.getElementById('product').innerHTML = "<p>Error searching products.</p>";
-      console.error(err);
-    });
-}
-
-function renderProducts(products) {
-  const container = document.getElementById('product');
-  container.innerHTML = '';
+function showProducts(products) {
+  productContainer.innerHTML = '';
 
   if (!products || products.length === 0) {
-    container.innerHTML = "<p>No products found.</p>";
+    productContainer.innerHTML = '<p>No products found.</p>';
     return;
   }
 
-  products.forEach(product => {
-    const html = `
+  products.forEach(p => {
+    const item = `
       <div class="product-item">
-        <img src="${product.thumbnail}" alt="${product.title}">
-        <h2>${product.title}</h2>
-        <p><strong>Brand:</strong> ${product.brand}</p>
-        <p><strong>Price:</strong> $${product.price}</p>
-        <p><strong>Rating:</strong> ⭐ ${product.rating}</p>
+        <img src="${p.thumbnail}" alt="${p.title}">
+        <h2>${p.title}</h2>
+        <p><b>Brand:</b> ${p.brand}</p>
+        <p><b>Price:</b> $${p.price}</p>
+        <p><b>Rating:</b> ⭐ ${p.rating}</p>
       </div>
     `;
-    container.innerHTML += html;
+    productContainer.innerHTML += item;
   });
 }
