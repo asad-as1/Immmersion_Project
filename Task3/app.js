@@ -1,10 +1,16 @@
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
+const sortSelect = document.getElementById('sortSelect');
 const productContainer = document.getElementById('product');
+
+let allProducts = [];
 
 fetch('https://dummyjson.com/products?limit=100')
   .then(res => res.json())
-  .then(data => showProducts(data.products));
+  .then(data => {
+    allProducts = data.products;
+    showProducts(allProducts);
+  });
 
 searchBtn.onclick = function () {
   const query = searchInput.value.trim();
@@ -12,14 +18,39 @@ searchBtn.onclick = function () {
   if (query === '') {
     fetch('https://dummyjson.com/products?limit=100')
       .then(res => res.json())
-      .then(data => showProducts(data.products));
+      .then(data => {
+        allProducts = data.products;
+        sortAndDisplay();
+      });
   } else {
     fetch(`https://dummyjson.com/products/search?q=${query}`)
       .then(res => res.json())
-      .then(data => showProducts(data.products));
+      .then(data => {
+        allProducts = data.products;
+        sortAndDisplay();
+      });
   }
 };
 
+// Sorting handler
+sortSelect.onchange = function () {
+  sortAndDisplay();
+};
+
+// Sort and display based on selected value
+function sortAndDisplay() {
+  let sorted = [...allProducts];
+
+  if (sortSelect.value === 'asc') {
+    sorted.sort((a, b) => a.price - b.price);
+  } else if (sortSelect.value === 'desc') {
+    sorted.sort((a, b) => b.price - a.price);
+  }
+
+  showProducts(sorted);
+}
+
+// Show products function
 function showProducts(products) {
   productContainer.innerHTML = '';
 
